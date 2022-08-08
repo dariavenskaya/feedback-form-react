@@ -1,0 +1,78 @@
+$inputBg: #ddd;
+
+form{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    div{
+        position: relative;
+        font-size: 14px;
+        border-top: 20px solid transparent;
+        margin-bottom: 5px;
+        display: flex;
+        flex-direction: column;
+    }
+    .short-fields{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        input{
+            width: 200px;
+        }
+    }
+}
+
+input{
+    border: none;
+    appearance: none;
+    background: $inputBg;
+    border-radius: 3px;
+    padding: 12px;
+    width: 300px;
+    outline: none;
+    font-size: 14px;
+}
+input[type="date"]{
+    font-family: 'Mukta';
+    height: 16px;
+}
+
+button{
+    all: unset;
+    width: 220px;
+    height: 50px;
+    background-color: #BD4089;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+textarea{
+    border-radius: 5px;
+    background: $inputBg;
+    outline: none;
+    resize: none;
+}
+button:hover{
+    background-color: #d076ab;
+    color: white;
+}
+.message{
+    color: #BD4089;
+    position: relative;
+    
+    .caption{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 12px;
+        width: 90px;
+    }
+    svg{
+        filter: drop-shadow(0 0 20px #d076ab);
+    }
+}
