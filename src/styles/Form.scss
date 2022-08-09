@@ -63,6 +63,9 @@ button:hover{
     background-color: #d076ab;
     color: white;
 }
+button:disabled{
+    cursor:not-allowed;
+}
 
 .error-message{
     width: 350px;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Form.scss'
 
 function Form(){
@@ -55,7 +55,15 @@ function Form(){
   const [telDirty, setTelDirty] = React.useState(false);
   const [telError, setTelError] = React.useState("Phone number can't be empty");
 
-
+  const telHandler = (e: React.ChangeEvent<any>) => {
+    setTel(e.target.value)
+    if(!e.target.value){
+      setTelError("Phone number can't be empty")
+    }
+    else{
+      setTelError('')
+    }
+  }
 
   //message validations
 
@@ -96,6 +104,20 @@ function Form(){
     }
   }
 
+  // disable submit button 
+  const [formValid, setFormValid] = React.useState(false)
+
+  React.useEffect( () => {
+      if(emailError || nameError || messageError || telError){
+          setFormValid(false)
+      }
+      else{
+        setFormValid(true)
+      }
+  }, [emailError, nameError, messageError, telError]
+
+  )
+
   return(
       <>
       <form autoComplete="off" action="#">
@@ -111,7 +133,7 @@ function Form(){
             <div className="tel">
               <label htmlFor="tel">Phone number:</label>
               {(telDirty && telError) && <div className="error">{telError}</div>}
-              <input onBlur={blurHandler} id="tel" name="tel" type="tel" placeholder="+7 ___ ___-____" pattern="+7 ___ ___-____"/>
+              <input onChange={e => telHandler(e)} onBlur={blurHandler} value={tel} id="tel" name="tel" type="tel" placeholder="+7 ___ ___-____" pattern="+7 ___ ___-____"/>
             </div>
             <div className="b-day">
               <label htmlFor="b-day">Birthday:</label>
@@ -121,7 +143,7 @@ function Form(){
           {(messageDirty && messageError) && <div className="error">{messageError}</div>}
           <textarea onChange={e => messageHandler(e)} value={message} onBlur={blurHandler} name="message" id="message" rows={3}
                placeholder="enter your message..." ></textarea>
-          <button type="submit">Send</button>
+          <button disabled={!formValid} type="submit">Send</button>
       </form>
       </>
   )
