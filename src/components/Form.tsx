@@ -10,13 +10,13 @@ function Form(){
   const [nameDirty, setNameDirty] = React.useState(false);
   const [nameError, setNameError] = React.useState("Name can't be empty");
 
-  const changeNameToUpperCase = (event: React.ChangeEvent<any>) => {
-    const result = event.target.value.toUpperCase();
-    setName(result);
-  };
 
   const nameHandler = (e: React.ChangeEvent<any>) => {
     setName(e.target.value.toUpperCase())
+    // const re = /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s\'\-]*)$/gi;
+    // if(!re.test(String(e.target.value))){
+    //   setNameError("name should consist of latin characters")
+    // }
     if(!e.target.value){
       setNameError("name can't be empty")
     }
@@ -65,16 +65,15 @@ function Form(){
 
   const messageHandler = (e: React.ChangeEvent<any>) => {
     setMessage(e.target.value)
-    if(e.target.value.length < 10 || e.target.value.length > 300){
-      setMessageError('Message shoulde over 10 characters and under 300 characters')
-    }
-    if(!e.target.value){
-      setMessageError("Message can't be empty")
-    }
-    else{
+    if((e.target.value).length < 10 || (e.target.value).length > 300){
+      setMessageError("Message shoulde over 10 characters and under 300 characters")
+      if(!e.target.value){
+        setMessageError("Message can't be empty")
+      }
+    }else{
       setMessageError('')
     }
-    console.log(e.target.value.lenght)
+    console.log((e.target.value).length)
   }
 
   //blur handler
@@ -102,7 +101,7 @@ function Form(){
       <form autoComplete="off" action="#">
           <div className="name">
           {(nameDirty && nameError) && <div className="error">{nameError}</div>}
-          <input onChange={e => nameHandler(e)} onBlur={blurHandler} id="name" name="name" type="text" placeholder="enter your name" value={name}/>
+          <input onChange={e => nameHandler(e)} value={name} onBlur={blurHandler} id="name" name="name" type="text" placeholder="enter your name" />
           </div>
           <div className="email">
             {(emailDirty && emailError) && <div className="error">{emailError}</div>}
