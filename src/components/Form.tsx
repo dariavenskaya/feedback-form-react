@@ -13,11 +13,18 @@ function Form(){
 
   const nameHandler = (e: React.ChangeEvent<any>) => {
     setName(e.target.value.toUpperCase())
-    // const re = /^([A-Za-z\u00C0-\u00D6\u00D8-\u00f6\u00f8-\u00ff\s\'\-]*)$/gi;
-    // if(!re.test(String(e.target.value))){
-    //   setNameError("name should consist of latin characters")
-    // }
-    if(!e.target.value){
+    // const re = /^([a-zA-Z]{3,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,})/;
+    const re = /[a-zA-Z]{3,}\s[a-zA-Z]{3,}/;
+    const reMax = /[a-zA-Z]{3,}\s[a-zA-Z]{3,}\s[a-zA-Z]{1,}/;
+
+    if(!re.test(String(e.target.value))){
+      setNameError("name should consist of two words in latin characters and have one space between")
+    }
+    else if(reMax.test(String(e.target.value))){
+      setNameError("name should consist only of two words")
+    }
+
+    else if(!e.target.value){
       setNameError("name can't be empty")
     }
     else{
@@ -42,7 +49,7 @@ function Form(){
     setEmail(e.target.value)
     const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;  
     if(!re.test(String(e.target.value).toLocaleLowerCase())){
-      setEmailError('Uncorrect email')
+      setEmailError('Incorrect email')
     }
     else{
       setEmailError('')
@@ -74,7 +81,7 @@ function Form(){
   const messageHandler = (e: React.ChangeEvent<any>) => {
     setMessage(e.target.value)
     if((e.target.value).length < 10 || (e.target.value).length > 300){
-      setMessageError("Message shoulde over 10 characters and under 300 characters")
+      setMessageError("Message shoulde be over 10 characters and under 300 characters")
       if(!e.target.value){
         setMessageError("Message can't be empty")
       }
