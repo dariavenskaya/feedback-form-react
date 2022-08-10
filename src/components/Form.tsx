@@ -6,14 +6,11 @@ function Form(){
   //name validations
 
   const [name, setName] = React.useState();
-  const [upperName, setUpperName] = React.useState('');
   const [nameDirty, setNameDirty] = React.useState(false);
   const [nameError, setNameError] = React.useState("Name can't be empty");
 
-
   const nameHandler = (e: React.ChangeEvent<any>) => {
     setName(e.target.value.toUpperCase())
-    // const re = /^([a-zA-Z]{3,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,})/;
     const re = /[a-zA-Z]{3,}\s[a-zA-Z]{3,}/;
     const reMax = /[a-zA-Z]{3,}\s[a-zA-Z]{3,}\s[a-zA-Z]{1,}/;
 
@@ -32,8 +29,6 @@ function Form(){
     }
     console.log(e.target.value)
   }
-
-
 
   //date validations
 
@@ -62,15 +57,20 @@ function Form(){
   const [telDirty, setTelDirty] = React.useState(false);
   const [telError, setTelError] = React.useState("Phone number can't be empty");
 
-  const telHandler = (e: React.ChangeEvent<any>) => {
-    setTel(e.target.value)
-    if(!e.target.value){
-      setTelError("Phone number can't be empty")
+
+    const telHandler = (e: React.ChangeEvent<any>) => {
+      const normalizedTel = (e.target.value).replace(/^(\d{3})(\d{3})(\d{2})(\d{2})$/, '+7 ($1) $2-$3-$4');
+      setTel(normalizedTel)
+      if(normalizedTel.length !== 18 ){
+          setTelError("Phone number should contain '+' and 11 numbers")
+        if(!e.target.value){
+          setTelError("Phone number can't be empty")
+        }
+      }else{
+        setTelError('')
+      }
+      console.log((e.target.value).length)
     }
-    else{
-      setTelError('')
-    }
-  }
 
   //message validations
 
@@ -88,8 +88,9 @@ function Form(){
     }else{
       setMessageError('')
     }
-    console.log((e.target.value).length)
+
   }
+
 
   //blur handler
 
@@ -122,7 +123,6 @@ function Form(){
         setFormValid(true)
       }
   }, [emailError, nameError, messageError, telError]
-
   )
 
   return(
@@ -140,7 +140,7 @@ function Form(){
             <div className="tel">
               <label htmlFor="tel">Phone number:</label>
               {(telDirty && telError) && <div className="error">{telError}</div>}
-              <input onChange={e => telHandler(e)} onBlur={blurHandler} value={tel} id="tel" name="tel" type="tel" placeholder="+7 ___ ___-____" pattern="+7 ___ ___-____"/>
+              <input onChange={e => telHandler(e)} onBlur={blurHandler} value={tel} inputMode="numeric" id="tel" name="tel" type="tel" placeholder="+7 ___ ___-____" />
             </div>
             <div className="b-day">
               <label htmlFor="b-day">Birthday:</label>
