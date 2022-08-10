@@ -27,7 +27,6 @@ function Form(){
     else{
       setNameError('')
     }
-    console.log(e.target.value)
   }
 
   //date validations
@@ -62,14 +61,14 @@ function Form(){
       const normalizedTel = (e.target.value).replace(/^(\d{3})(\d{3})(\d{2})(\d{2})$/, '+7 ($1) $2-$3-$4');
       setTel(normalizedTel)
       if(normalizedTel.length !== 18 ){
-          setTelError("Phone number should contain '+' and 11 numbers")
+          setTelError("Wrong phone number length, please check")
         if(!e.target.value){
           setTelError("Phone number can't be empty")
         }
+      
       }else{
         setTelError('')
       }
-      console.log((e.target.value).length)
     }
 
   //message validations
@@ -112,7 +111,8 @@ function Form(){
     }
   }
 
-  // disable submit button 
+  // disable submit button when form is not valid
+  
   const [formValid, setFormValid] = React.useState(false)
 
   React.useEffect( () => {
