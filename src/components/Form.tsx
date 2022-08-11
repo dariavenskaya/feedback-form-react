@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { resolveProjectReferencePath } from 'typescript';
 import '../styles/Form.scss'
+import APIResponce from './Responce';
 
 function Form(){
 
@@ -56,7 +58,6 @@ function Form(){
   const [telDirty, setTelDirty] = React.useState(false);
   const [telError, setTelError] = React.useState("Phone number can't be empty");
 
-
     const telHandler = (e: React.ChangeEvent<any>) => {
       const normalizedTel = (e.target.value).replace(/^(\d{3})(\d{3})(\d{2})(\d{2})$/, '+7 ($1) $2-$3-$4');
       setTel(normalizedTel)
@@ -65,7 +66,6 @@ function Form(){
         if(!e.target.value){
           setTelError("Phone number can't be empty")
         }
-      
       }else{
         setTelError('')
       }
@@ -87,9 +87,7 @@ function Form(){
     }else{
       setMessageError('')
     }
-
   }
-
 
   //blur handler
 
@@ -107,12 +105,11 @@ function Form(){
       case 'tel':
         setTelDirty(true)
         break
-  
     }
   }
 
   // disable submit button when form is not valid
-  
+
   const [formValid, setFormValid] = React.useState(false)
 
   React.useEffect( () => {
@@ -125,9 +122,26 @@ function Form(){
   }, [emailError, nameError, messageError, telError]
   )
 
+//server responce
+const [answer, setAnswer] = React.useState('the responce will appear here')
+
+const fetchData = () => {
+  fetch("https://my-json-server.typicode.com/dariavenskaya/my-JSON-server/posts")
+    .then((response) => {
+      if(response.ok){
+        console.log(response)
+        setAnswer('Thank you for feedback!')
+      } else { 
+        console.log('err')
+        setAnswer('Something went wrong')
+      }
+    }) 
+}
+
+
   return(
       <>
-      <form autoComplete="off" action="#">
+      <form autoComplete="off" >
           <div className="name">
           {(nameDirty && nameError) && <div className="error">{nameError}</div>}
           <input onChange={e => nameHandler(e)} value={name} onBlur={blurHandler} id="name" name="name" type="text" placeholder="enter your name" />
@@ -150,9 +164,12 @@ function Form(){
           {(messageDirty && messageError) && <div className="error">{messageError}</div>}
           <textarea onChange={e => messageHandler(e)} value={message} onBlur={blurHandler} name="message" id="message" rows={3}
                placeholder="enter your message..." ></textarea>
-          <button disabled={!formValid} type="submit">Send</button>
+          <div>{answer}</div>
       </form>
+      <button disabled={!formValid} onClick={fetchData}>Send</button>
       </>
   )
 }
 export default Form;
+
+//
