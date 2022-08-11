@@ -1,6 +1,6 @@
 #Feedback form 
 
 
-You can find (demo)[https://dariavenskaya-feedback.netlify.app] here
+You can find [demo](https://dariavenskaya-feedback.netlify.app) here
 
 Thank you!
