@@ -140,7 +140,7 @@ const fetchData = () => {
 
 
   return(
-      <>
+      <div className='form'>
       <form autoComplete="off" >
           <div className="name">
           {(nameDirty && nameError) && <div className="error">{nameError}</div>}
@@ -167,7 +167,7 @@ const fetchData = () => {
           <div>{answer}</div>
       </form>
       <button disabled={!formValid} onClick={fetchData}>Send</button>
-      </>
+      </div>
   )
 }
 export default Form;
