@@ -1,5 +1,11 @@
 $inputBg: #ddd;
 
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
 form{
     display: flex;
     flex-direction: column;
@@ -50,6 +56,7 @@ button{
     border-radius: 5px;
     margin-top: 10px;
     transition: all 0.3s;
+    margin: 0 auto
 }
 textarea{
     border-radius: 5px;
